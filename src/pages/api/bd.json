@@ -6,7 +6,7 @@
       "autor": "Machado de Assis",
       "genero": "Romance",
       "quantidade": 5,
-      "qtdEmprestados": 0
+      "qtdEmprestados": 2
     },
     {
       "id": "b4c1d8e2-7a6f-4b9c-8e23-2d4c6f8a0b12",
@@ -14,7 +14,7 @@
       "autor": "Paulo Coelho",
       "genero": "Ficção",
       "quantidade": 4,
-      "qtdEmprestados": 0
+      "qtdEmprestados": 2
     },
     {
       "id": "c5d2e7f3-8b5a-4c0d-9f34-3e5d7a9b1c23",
@@ -22,7 +22,7 @@
       "autor": "Jorge Amado",
       "genero": "Romance",
       "quantidade": 6,
-      "qtdEmprestados": 0
+      "qtdEmprestados": 1
     },
     {
       "id": "d6e3f6a4-9c4b-4d1e-af45-4f6e8b0c2d34",
@@ -30,7 +30,7 @@
       "autor": "Clarice Lispector",
       "genero": "Drama",
       "quantidade": 3,
-      "qtdEmprestados": 0
+      "qtdEmprestados": 1
     },
     {
       "id": "e7f4a5b5-ad3c-4e2f-b056-5a7f9c1d3e45",
@@ -46,7 +46,7 @@
       "autor": "Machado de Assis",
       "genero": "Romance",
       "quantidade": 4,
-      "qtdEmprestados": 0
+      "qtdEmprestados": 1
     },
     {
       "id": "09b6c3d7-cf1e-4031-d278-7c9b1e3f5a67",
@@ -86,7 +86,7 @@
       "genero": "fantasia",
       "autor": "C.S.Lewis",
       "quantidade": 3,
-      "qtdEmprestados": 0
+      "qtdEmprestados": 1
     },
     {
       "id": "f1776731-d515-4655-bffd-ac619c32374c",
@@ -97,7 +97,32 @@
       "qtdEmprestados": 0
     }
   ],
-  "emprestimos": [],
+  "emprestimos": [
+    {
+      "id": "ba5a5e0a-34fa-479e-b6a7-e48a155e6050",
+      "usuarioId": "b4102f9c-bfb4-4d53-a1e8-6ac2953eccef",
+      "livrosIds": [
+        "a3f2e9d1-6b7c-4f8a-9d12-1c3b5e7f9a01",
+        "b4c1d8e2-7a6f-4b9c-8e23-2d4c6f8a0b12",
+        "c5d2e7f3-8b5a-4c0d-9f34-3e5d7a9b1c23",
+        "d6e3f6a4-9c4b-4d1e-af45-4f6e8b0c2d34"
+      ],
+      "dataEmprestimo": "2026-03-16",
+      "status": "ativo"
+    },
+    {
+      "id": "f1efefde-a9cb-4434-bd39-3c0b5a0dcc40",
+      "usuarioId": "b4102f9c-bfb4-4d53-a1e8-6ac2953eccef",
+      "livrosIds": [
+        "a3f2e9d1-6b7c-4f8a-9d12-1c3b5e7f9a01",
+        "b4c1d8e2-7a6f-4b9c-8e23-2d4c6f8a0b12",
+        "f8a5b4c6-be2d-4f30-c167-6b8a0d2e4f56",
+        "6b1c8266-783c-4c94-a648-7fc238fce2d1"
+      ],
+      "dataEmprestimo": "2026-03-16",
+      "status": "ativo"
+    }
+  ],
   "usuarios": [
     {
       "id": "a3f2e9d1-6b7c-4f8a-9d12-1ddd5e7f9a01",
