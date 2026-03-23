@@ -6,7 +6,7 @@
       "autor": "Machado de Assis",
       "genero": "Romance",
       "quantidade": 5,
-      "qtdEmprestados": 2
+      "qtdEmprestados": 3
     },
     {
       "id": "b4c1d8e2-7a6f-4b9c-8e23-2d4c6f8a0b12",
@@ -81,18 +81,10 @@
       "qtdEmprestados": 0
     },
     {
-      "id": "6b1c8266-783c-4c94-a648-7fc238fce2d1",
-      "titulo": "blablabla",
-      "genero": "fantasia",
+      "id": "d34beafb-16a7-4533-8330-dd7f00881b93",
+      "titulo": "As Crônicas de Nárnia",
+      "genero": "Fantasia",
       "autor": "C.S.Lewis",
-      "quantidade": 3,
-      "qtdEmprestados": 1
-    },
-    {
-      "id": "f1776731-d515-4655-bffd-ac619c32374c",
-      "titulo": "muito bacana",
-      "genero": "fantasia",
-      "autor": "batata",
       "quantidade": 3,
       "qtdEmprestados": 0
     }
@@ -120,6 +112,15 @@
         "6b1c8266-783c-4c94-a648-7fc238fce2d1"
       ],
       "dataEmprestimo": "2026-03-16",
+      "status": "ativo"
+    },
+    {
+      "id": "d27fd5c1-8f21-46d2-92aa-1b1de8cb05cd",
+      "usuarioId": "b4102f9c-bfb4-4d53-a1e8-6ac2953eccef",
+      "livrosIds": [
+        "a3f2e9d1-6b7c-4f8a-9d12-1c3b5e7f9a01"
+      ],
+      "dataEmprestimo": "2026-03-23",
       "status": "ativo"
     }
   ],
@@ -155,16 +156,22 @@
       "telefone": "(51) 94444-5005"
     },
     {
-      "id": "b4102f9c-bfb4-4d53-a1e8-6ac2953eccef",
-      "nome": "HELENA ALBANO MORETO LOPES",
-      "telefone": "32998608150",
-      "senha": "123456"
+      "id": "f67d2cc3-e75a-44f8-a427-ffa697d654ee",
+      "nome": "Helena Albano",
+      "email": "helenaAlbano@gmail.com",
+      "telefone": "32998608159"
     },
     {
-      "id": "a81a0c36-fa33-4e78-b54f-4ed7f08bbfb4",
-      "nome": "jão",
-      "telefone": "32998608150",
-      "senha": "123456"
+      "id": "645ac066-9b1e-48bf-9bc0-8971ddbf5b03",
+      "nome": "João Pedro Luciano",
+      "email": "jaoluciano@gmail.com",
+      "telefone": "3212345678"
+    },
+    {
+      "id": "ac4e407f-a1ae-4754-97ac-dbcc730f7fd0",
+      "nome": "Victor Cássio",
+      "email": "victorcassio@gmail.com",
+      "telefone": "3212345678"
     }
   ]
 }

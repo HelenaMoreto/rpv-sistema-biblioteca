@@ -10,7 +10,6 @@ type Usuario = {
   nome: string
   email?: string
   telefone: string
-  senha: string
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -24,7 +23,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const usuarios: Usuario[] = parsed.usuarios ?? []
 
-  const { nome, email, telefone, senha } = req.body
+  const { nome, email, telefone } = req.body
 
   if (!nome || typeof nome !== 'string') {
     return res.status(400).json({ mensagem: 'Nome é obrigatório' })
@@ -32,10 +31,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (!telefone) {
     return res.status(400).json({ mensagem: 'Telefone é obrigatório' })
-  }
-
-  if (!senha) {
-    return res.status(400).json({ mensagem: 'Senha é obrigatória' })
   }
 
   const jaExiste = usuarios.some(
@@ -52,7 +47,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     nome: nome.trim(),
     email,
     telefone,
-    senha
   }
 
   usuarios.push(novoUsuario)
