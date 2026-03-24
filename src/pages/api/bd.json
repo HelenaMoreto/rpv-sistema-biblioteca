@@ -6,7 +6,7 @@
       "autor": "Machado de Assis",
       "genero": "Romance",
       "quantidade": 5,
-      "qtdEmprestados": 3
+      "qtdEmprestados": 2
     },
     {
       "id": "b4c1d8e2-7a6f-4b9c-8e23-2d4c6f8a0b12",
@@ -14,7 +14,7 @@
       "autor": "Paulo Coelho",
       "genero": "Ficção",
       "quantidade": 4,
-      "qtdEmprestados": 2
+      "qtdEmprestados": 1
     },
     {
       "id": "c5d2e7f3-8b5a-4c0d-9f34-3e5d7a9b1c23",
@@ -22,7 +22,7 @@
       "autor": "Jorge Amado",
       "genero": "Romance",
       "quantidade": 6,
-      "qtdEmprestados": 1
+      "qtdEmprestados": 0
     },
     {
       "id": "d6e3f6a4-9c4b-4d1e-af45-4f6e8b0c2d34",
@@ -30,7 +30,7 @@
       "autor": "Clarice Lispector",
       "genero": "Drama",
       "quantidade": 3,
-      "qtdEmprestados": 1
+      "qtdEmprestados": 0
     },
     {
       "id": "e7f4a5b5-ad3c-4e2f-b056-5a7f9c1d3e45",
@@ -93,14 +93,10 @@
     {
       "id": "ba5a5e0a-34fa-479e-b6a7-e48a155e6050",
       "usuarioId": "b4102f9c-bfb4-4d53-a1e8-6ac2953eccef",
-      "livrosIds": [
-        "a3f2e9d1-6b7c-4f8a-9d12-1c3b5e7f9a01",
-        "b4c1d8e2-7a6f-4b9c-8e23-2d4c6f8a0b12",
-        "c5d2e7f3-8b5a-4c0d-9f34-3e5d7a9b1c23",
-        "d6e3f6a4-9c4b-4d1e-af45-4f6e8b0c2d34"
-      ],
+      "livrosIds": [],
       "dataEmprestimo": "2026-03-16",
-      "status": "ativo"
+      "status": "concluído",
+      "dataDevolucao": "2026-03-24"
     },
     {
       "id": "f1efefde-a9cb-4434-bd39-3c0b5a0dcc40",
@@ -122,6 +118,15 @@
       ],
       "dataEmprestimo": "2026-03-23",
       "status": "ativo"
+    },
+    {
+      "id": "4c81c160-5a06-4b8f-95f2-f656b3f7dda5",
+      "usuarioId": "b4c1d8e2-7a6f-4b9c-8e23-2ddd6f8a0b12",
+      "livrosIds": [],
+      "dataEmprestimo": "2026-03-24",
+      "status": "concluído",
+      "livrosDevolvidosIds": [],
+      "dataDevolucao": "2026-03-24"
     }
   ],
   "usuarios": [

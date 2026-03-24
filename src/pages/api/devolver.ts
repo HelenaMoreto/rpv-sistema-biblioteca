@@ -4,98 +4,116 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const filePath = path.join(process.cwd(), 'src', 'pages', 'api', 'bd.json')
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+type Livro = {
+  id: string
+  titulo: string
+  genero: string
+  autor: string
+  quantidade: number
+  qtdEmprestados: number
+}
 
+type Emprestimo = {
+  id: string
+  usuarioId: string
+  livrosIds: string[]
+  dataEmprestimo: string
+  dataDevolucao?: string
+  status: 'ativo' | 'concluído'
+}
+
+type Banco = {
+  usuarios: any[]
+  livros: Livro[]
+  emprestimos: Emprestimo[]
+}
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ mensagem: 'Método não permitido' })
   }
 
-  const jsonData = fs.readFileSync(filePath, 'utf-8')
-  const parsed = JSON.parse(jsonData)
+  try {
+    const { emprestimoId, livrosIds } = req.body
 
-  const { emprestimoId, livrosIds } = req.body
-
-  const livros = parsed.livros ?? []
-  const emprestimos = parsed.emprestimos ?? []
-
-
-  // VALIDAR ENTRADA
-
-  if (!emprestimoId || !Array.isArray(livrosIds) || livrosIds.length === 0) {
-    return res.status(400).json({
-      mensagem: 'emprestimoId e livrosIds são obrigatórios'
-    })
-  }
-
-
-  // LOCALIZAR EMPRÉSTIMO
-
-  const emprestimo = emprestimos.find((e: any) => e.id === emprestimoId)
-
-  if (!emprestimo) {
-    return res.status(400).json({
-      mensagem: 'Empréstimo não encontrado'
-    })
-  }
-
-  if (emprestimo.status !== 'ativo') {
-    return res.status(400).json({
-      mensagem: 'Este empréstimo já foi concluído'
-    })
-  }
-
-
-  // VALIDAR QUE OS LIVROS PERTENCEM AO EMPRÉSTIMO
-
-  for (const livroId of livrosIds) {
-    if (!emprestimo.livrosIds.includes(livroId)) {
+    if (!emprestimoId || !livrosIds) {
       return res.status(400).json({
-        mensagem: `Livro "${livroId}" não pertence a este empréstimo`
+        mensagem: 'Os campos emprestimoId e livrosIds são obrigatórios'
       })
     }
-  }
 
+    if (!Array.isArray(livrosIds) || livrosIds.length === 0) {
+      return res.status(400).json({
+        mensagem: 'livrosIds deve ser um array com pelo menos um livro'
+      })
+    }
 
-  // ATUALIZAR ESTOQUE — decrementar qtdEmprestados de cada livro devolvido
+    const jsonData = fs.readFileSync(filePath, 'utf-8')
+    const banco: Banco = JSON.parse(jsonData)
 
-  for (const livroId of livrosIds) {
-    const livro = livros.find((l: any) => l.id === livroId)
+    const emprestimo = banco.emprestimos.find(
+      (item) => item.id === emprestimoId
+    )
 
-    if (livro && livro.qtdEmprestados > 0) {
+    if (!emprestimo) {
+      return res.status(404).json({
+        mensagem: 'Empréstimo não encontrado'
+      })
+    }
+
+    if (emprestimo.status !== 'ativo') {
+      return res.status(400).json({
+        mensagem: 'Esse empréstimo não está ativo'
+      })
+    }
+
+    for (const livroId of livrosIds) {
+      if (!emprestimo.livrosIds.includes(livroId)) {
+        return res.status(400).json({
+          mensagem: `O livro com ID ${livroId} não pertence a este empréstimo ou já foi devolvido`
+        })
+      }
+    }
+
+    for (const livroId of livrosIds) {
+      const livro = banco.livros.find((item) => item.id === livroId)
+
+      if (!livro) {
+        return res.status(404).json({
+          mensagem: `Livro com ID ${livroId} não encontrado`
+        })
+      }
+
+      if (livro.qtdEmprestados <= 0) {
+        return res.status(400).json({
+          mensagem: `O livro "${livro.titulo}" não possui exemplares emprestados para devolução`
+        })
+      }
+
       livro.qtdEmprestados -= 1
     }
+
+    emprestimo.livrosIds = emprestimo.livrosIds.filter(
+      (id) => !livrosIds.includes(id)
+    )
+
+    if (emprestimo.livrosIds.length === 0) {
+      emprestimo.status = 'concluído'
+      emprestimo.dataDevolucao = new Date().toISOString().split('T')[0]
+    }
+
+    fs.writeFileSync(filePath, JSON.stringify(banco, null, 2))
+
+    return res.status(200).json({
+      mensagem: emprestimo.status === 'concluído'
+        ? 'Devolução realizada e empréstimo concluído com sucesso'
+        : 'Devolução parcial realizada com sucesso',
+      emprestimo
+    })
+
+  } catch (error) {
+    return res.status(500).json({
+      mensagem: 'Erro interno ao processar devolução'
+    })
   }
-
-
-  // VERIFICAR SE TODOS OS LIVROS DO EMPRÉSTIMO FORAM DEVOLVIDOS
-  // Controla quais livros já foram devolvidos acumulando nas devoluções parciais
-
-  const jaDevolvidos: string[] = emprestimo.livrosDevolvidos ?? []
-  const agoraDevolvidos = [...new Set([...jaDevolvidos, ...livrosIds])]
-
-  emprestimo.livrosDevolvidos = agoraDevolvidos
-
-  const todosDevolvidos = emprestimo.livrosIds.every((id: string) =>
-    agoraDevolvidos.includes(id)
-  )
-
-  if (todosDevolvidos) {
-    emprestimo.status = 'concluído'
-    emprestimo.dataDevolucao = new Date().toISOString().split('T')[0]
-  }
-
-
-  // SALVAR
-
-  parsed.emprestimos = emprestimos
-  parsed.livros = livros
-
-  fs.writeFileSync(filePath, JSON.stringify(parsed, null, 2))
-
-  return res.status(200).json({
-    mensagem: todosDevolvidos
-      ? 'Todos os livros foram devolvidos. Empréstimo concluído!'
-      : 'Devolução parcial registrada com sucesso.',
-    emprestimo
-  })
 }
